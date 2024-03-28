@@ -131,7 +131,7 @@ export default function SignIn() {
             <span>
               Not have an account?
             </span>
-            <Link to='/sign-in' className='text-blue-500'>Sign-Up</Link>
+            <Link to='/sign-up' className='text-blue-500'>Sign-Up</Link>
           </div>
           {
             errorMessage && (
