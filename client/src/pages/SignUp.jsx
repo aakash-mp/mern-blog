@@ -53,6 +53,41 @@ export default function SignUp() {
     }
   }
 
+
+/*async function handleSubmit(event) {
+  event.preventDefault();
+
+  if (!formData.username || !formData.email || !formData.password) {
+    return setErrorMessage('Please fill out all the fields');
+  }
+
+  try {
+    setLoading(true);
+    setErrorMessage(null);
+
+    const response = await axios.post('/api/auth/signup', formData, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    const data = response.data;
+
+    if (data.success === false) {
+      return setErrorMessage(data.message);
+    }
+
+    setLoading(false);
+
+    if (response.status === 200) {
+      navigate('/sign-in');
+    }
+
+  } catch (error) {
+    setErrorMessage(error.message);
+    setLoading(false);
+  }
+}*/
+
+
   return (
     <div className='min-h-screen mt-20'>
       <div className='flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5'>
