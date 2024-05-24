@@ -6,6 +6,7 @@ import { app } from '../firebase'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { updateStart, updateSuccess, updateFailure } from '../redux/user/userSlice'
+import { errorHandler } from '../../../api/utils/error.js';
 
 export default function DashProfile() {
 
@@ -102,14 +103,14 @@ export default function DashProfile() {
             });
             const data = await res.json();
             if(!res.ok) {
-                dispatch(updateFailure(data.message));
-                setUpdateUserError(data.message);
+                throw errorHandler(res.status, data.message); // Throw error using global error handler
             }else{
                 dispatch(updateSuccess(data));
                 setUpdateUserSuccess("Profile updated successfully");
             }
         } catch (error) {
-            
+            dispatch(updateFailure(error.message));
+            setUpdateUserError(error.message); // Set the error message to display
         }
     }
 
