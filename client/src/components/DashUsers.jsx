@@ -49,23 +49,32 @@ export default function DashUsers() {
     };
 
      const handleDeleteUser = async () =>{
-    //     setShowModal(false);
-    //     try {
-    //         const res = await fetch(`/api/user/deleteuser/${userIdToDelete}/${currentUser._id}`,
-    //         {
-    //             method: 'DELETE',
-    //         });
-    //         const data = await res.json();
-    //         if(!res.ok) {
-    //             console.log(data.message);
-    //         }else {
-    //             setUserPosts((prev) => 
-    //                 prev.filter((post) => post._id !== postIdToDelete)
-    //             );
-    //         }
-    //     } catch (error) {
-    //         console.log(error.message);
-    //     }
+         setShowModal(false);
+         try {
+            const res = await fetch(`/api/user/delete/${userIdToDelete}`,
+            {
+                method: 'DELETE',
+            });
+            const data = await res.json();
+            if(!res.ok) {
+                console.log(data.message);
+            }else {
+                setUsers((prev) => 
+                    prev.filter((user) => user._id !== userIdToDelete)
+                );
+                // Fetch one more user
+                    const startIndex = users.length - 1; // Adjust start index after deletion
+                    const moreUsersRes = await fetch(`/api/user/getusers?startIndex=${startIndex}&limit=1`);
+                    const moreUsersData = await moreUsersRes.json();
+                    if (moreUsersRes.ok && moreUsersData.users.length > 0) {
+                        setUsers((prev) => [...prev, ...moreUsersData.users]);
+                    } else {
+                            setShowMore(false); // If no more users to load
+                        }
+                    }
+        } catch (error) {
+            console.log(error.message);
+        }
     }
   return (
     <div className='table-auto overflow-x-scroll md:mx-auto p-3 scrollbar
